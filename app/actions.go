@@ -60,6 +60,10 @@ func FindOrderByID(orders map[int]*order.Order, users []user.User) {
 
 // Добавление нового пользователя
 func AddUser(data *Storage) {
+	if !RequireAuth() {
+		return
+	}
+
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Введите имя пользователя: ")
@@ -82,10 +86,15 @@ func AddUser(data *Storage) {
 	data.Users = append(data.Users, newUser)
 
 	fmt.Printf("✅ Пользователь %s успешно добавлен с ID %d\n", name, newID)
+	data.AutoSave()
 }
 
 // Добавление нового заказа
-func AddNewOrder(orders map[int]*order.Order, users []user.User, products []product.Product) {
+func AddNewOrder(storage *Storage) {
+	if !RequireAuth() {
+		return
+	}
+
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Введите ID пользователя для заказа: ")
@@ -99,7 +108,7 @@ func AddNewOrder(orders map[int]*order.Order, users []user.User, products []prod
 
 	// Проверка пользователя
 	var userExists bool
-	for _, u := range users {
+	for _, u := range storage.Users {
 		if u.ID == userID {
 			userExists = true
 			break
@@ -112,7 +121,7 @@ func AddNewOrder(orders map[int]*order.Order, users []user.User, products []prod
 
 	// Выводим список товаров
 	fmt.Println("📦 Доступные товары:")
-	for i, p := range products {
+	for i, p := range storage.Products {
 		fmt.Printf("%d. %s — %.2f₽\n", i+1, p.Name, p.Price)
 	}
 
@@ -126,11 +135,11 @@ func AddNewOrder(orders map[int]*order.Order, users []user.User, products []prod
 	for _, idStr := range ids {
 		idStr = strings.TrimSpace(idStr)
 		idx, err := strconv.Atoi(idStr)
-		if err != nil || idx < 1 || idx > len(products) {
+		if err != nil || idx < 1 || idx > len(storage.Products) {
 			fmt.Printf("⚠️ Пропущен некорректный номер: %s\n", idStr)
 			continue
 		}
-		selectedProducts = append(selectedProducts, products[idx-1])
+		selectedProducts = append(selectedProducts, storage.Products[idx-1])
 	}
 
 	if len(selectedProducts) == 0 {
@@ -140,13 +149,16 @@ func AddNewOrder(orders map[int]*order.Order, users []user.User, products []prod
 
 	// Генерация нового ID заказа
 	newID := 1
-	for id := range orders {
+	for id := range storage.Orders {
 		if id >= newID {
 			newID = id + 1
 		}
 	}
 
 	newOrder := order.New(newID, userID, selectedProducts)
-	orders[newID] = newOrder
+	storage.Orders[newID] = newOrder
 	fmt.Printf("✅ Заказ #%d успешно создан для пользователя %d\n", newID, userID)
+
+	// Auto-save after creating order
+	storage.AutoSave()
 }

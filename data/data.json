@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "ID": 1,
+      "Name": "Миша",
+      "Email": "misha@email.com"
+    },
+    {
+      "ID": 2,
+      "Name": "Вася",
+      "Email": "vasya@email.com"
+    },
+    {
+      "ID": 3,
+      "Name": "Анна",
+      "Email": "anna@email.com"
+    }
+  ],
+  "products": [
+    {
+      "ID": 1,
+      "Name": "iPhone 15",
+      "Price": 999.99
+    },
+    {
+      "ID": 2,
+      "Name": "MacBook Pro",
+      "Price": 1999.99
+    },
+    {
+      "ID": 3,
+      "Name": "iPad Air",
+      "Price": 799.99
+    }
+  ],
+  "orders": [
+    {
+      "ID": 1,
+      "UserID": 1,
+      "Products": [
+        {
+          "ID": 1,
+          "Name": "iPhone 15",
+          "Price": 999.99
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "UserID": 2,
+      "Products": [
+        {
+          "ID": 1,
+          "Name": "iPhone 15",
+          "Price": 999.99
+        },
+        {
+          "ID": 2,
+          "Name": "MacBook Pro",
+          "Price": 1999.99
+        }
+      ]
+    },
+    {
+      "ID": 3,
+      "UserID": 3,
+      "Products": [
+        {
+          "ID": 3,
+          "Name": "iPad Air",
+          "Price": 799.99
+        }
+      ]
+    }
+  ]
+}
