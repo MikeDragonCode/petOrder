@@ -7,7 +7,7 @@ import (
 
 func showAllOrders(s *Storage) {
 	for id, o := range s.Orders {
-		username := getUserNameByID(s.Users, o.UserID)
+		username := GetUserNameByID(s.Users, o.UserID)
 		fmt.Printf("Заказ #%d — клиент %s\n", id, username)
 		for _, p := range o.Products {
 			fmt.Printf("  - %s: %.2f₽\n", p.Name, p.Price)
@@ -22,7 +22,7 @@ func showAllUsers(s *Storage) {
 	}
 }
 
-func getUserNameByID(users []user.User, id int) string {
+func GetUserNameByID(users []user.User, id int) string {
 	for _, u := range users {
 		if u.ID == id {
 			return u.Name

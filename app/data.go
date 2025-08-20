@@ -6,21 +6,30 @@ import (
 	"awesomeProject/user"
 )
 
-var Products = []product.Product{
-	product.NewProduct(1, "iPhone 15", 999.99),
-	product.NewProduct(2, "MacBook Pro", 1999.99),
-	product.NewProduct(3, "iPad Air", 799.99),
-	product.NewProduct(4, "Apple Watch", 499.99),
+type Data struct {
+	Users  []user.User
+	Orders map[int]*order.Order
 }
 
-var Users = []user.User{
-	user.New(1, "Миша", "misha@email.com"),
-	user.New(2, "Вася", "vasya@email.com"),
-	user.New(3, "Анна", "anna@email.com"),
-}
+func InitData() *Data {
+	p1 := product.NewProduct(1, "iPhone 15", 999.99)
+	p2 := product.NewProduct(2, "MacBook Pro", 1999.99)
+	p3 := product.NewProduct(3, "iPad Air", 799.99)
 
-var OrdersMap = map[int]*order.Order{
-	1: order.New(1, 1, []product.Product{Products[0]}),
-	2: order.New(2, 2, []product.Product{Products[0], Products[1]}),
-	3: order.New(3, 3, []product.Product{Products[2]}),
+	u1 := user.New(1, "Миша", "misha@email.com")
+	u2 := user.New(2, "Вася", "vasya@email.com")
+	u3 := user.New(3, "Анна", "anna@email.com")
+
+	users := []user.User{u1, u2, u3}
+
+	orders := map[int]*order.Order{
+		1: order.New(1, u1.ID, []product.Product{p1}),
+		2: order.New(2, u2.ID, []product.Product{p1, p2}),
+		3: order.New(3, u3.ID, []product.Product{p3}),
+	}
+
+	return &Data{
+		Users:  users,
+		Orders: orders,
+	}
 }

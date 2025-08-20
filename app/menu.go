@@ -8,14 +8,14 @@ import (
 	"strings"
 )
 
-// StartMenu запускает интерфейс пользователя
-func StartMenu() {
+func StartMenu(data *Data) {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
 		fmt.Println("\n📋 Меню:")
 		fmt.Println("1. Показать все заказы")
 		fmt.Println("2. Показать всех пользователей")
+		fmt.Println("3. Найти заказ по ID")
 		fmt.Println("0. Выйти")
 
 		fmt.Print("Выберите действие: ")
@@ -29,9 +29,11 @@ func StartMenu() {
 
 		switch choice {
 		case 1:
-			ShowOrders()
+			ShowOrders(data.Orders, data.Users)
 		case 2:
-			ShowUsers()
+			ShowUsers(data.Users)
+		case 3:
+			FindOrderByID(data.Orders, data.Users)
 		case 0:
 			fmt.Println("👋 Выход из программы.")
 			return
