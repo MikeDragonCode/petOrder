@@ -1,11 +1,8 @@
 package app
 
-import (
-	"fmt"
-)
+import "fmt"
 
-func Run() {
+func Run(data *Storage) {
 	fmt.Println("Добро пожаловать в Order Management System!")
-	data := InitData()
 	StartMenu(data)
 }

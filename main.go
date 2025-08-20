@@ -1,7 +1,10 @@
 package main
 
-import "awesomeProject/app"
+import (
+	"awesomeProject/app"
+)
 
 func main() {
-	app.Run()
+	storage := app.InitStorage()
+	app.Run(storage)
 }
