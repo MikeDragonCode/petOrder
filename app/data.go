@@ -6,17 +6,17 @@ import (
 	"awesomeProject/user"
 )
 
-var Users = []user.User{
-	user.New(1, "Миша", "misha@email.com"),
-	user.New(2, "Вася", "vasya@email.com"),
-	user.New(3, "Анна", "anna@email.com"),
-}
-
 var Products = []product.Product{
 	product.NewProduct(1, "iPhone 15", 999.99),
 	product.NewProduct(2, "MacBook Pro", 1999.99),
 	product.NewProduct(3, "iPad Air", 799.99),
 	product.NewProduct(4, "Apple Watch", 499.99),
+}
+
+var Users = []user.User{
+	user.New(1, "Миша", "misha@email.com"),
+	user.New(2, "Вася", "vasya@email.com"),
+	user.New(3, "Анна", "anna@email.com"),
 }
 
 var OrdersMap = map[int]*order.Order{

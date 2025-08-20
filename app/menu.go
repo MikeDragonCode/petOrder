@@ -8,7 +8,8 @@ import (
 	"strings"
 )
 
-func startMenu(s *Storage) {
+// StartMenu запускает интерфейс пользователя
+func StartMenu() {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
@@ -18,24 +19,24 @@ func startMenu(s *Storage) {
 		fmt.Println("0. Выйти")
 
 		fmt.Print("Выберите действие: ")
-		choiceStr, _ := reader.ReadString('\n')
-		choiceStr = strings.TrimSpace(choiceStr)
-		choice, err := strconv.Atoi(choiceStr)
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
+		choice, err := strconv.Atoi(input)
 		if err != nil {
-			fmt.Println("Некорректный ввод. Введите число.")
+			fmt.Println("❌ Введите корректное число.")
 			continue
 		}
 
 		switch choice {
 		case 1:
-			showAllOrders(s)
+			ShowOrders()
 		case 2:
-			showAllUsers(s)
+			ShowUsers()
 		case 0:
 			fmt.Println("👋 Выход из программы.")
 			return
 		default:
-			fmt.Println("Неизвестная команда.")
+			fmt.Println("❌ Неизвестная команда.")
 		}
 	}
 }
